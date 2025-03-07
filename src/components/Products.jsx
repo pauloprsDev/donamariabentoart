@@ -7,37 +7,35 @@ const products = [
       name: 'Cozinhar é só um jeito diferente de amar',
       description: 'Lindo pano de prato todo trabalhado na pintura em detalhes magenta! Escolha o que mais combina com a sua decoração 🥰',
       price: 'R$ 120,00',
-      image: '/donamariabentoart/cozinhareamar.jpg'
+      image: 'cozinhareamar.jpg'
     },
     {
       id: 2,
       name: 'Coisas Boas Acontecem Aqui',
       description: 'Pano de prato frase "coisas boas acontecem aqui" feito a mão em pano 100%algodão- 41x66cm',
       price: 'R$ 135,00',
-      image: '/donamariabentoart/coisas_boas_acontecem.jpg'
+      image: 'coisas_boas_acontecem.jpg'
     },
     {
       id: 3,
       name: 'Eu me lembro de quando',
       description: 'Pano de prato com bordado em tons de rosa e verde, com frase nostálgica e detalhes de folhagens. Tecido 100% algodão.',
       price: 'R$ 125,00',
-      image: '/donamariabentoart/melembro.jpg'
+      image: 'melembro.jpg'
     },
     {
       id: 4,
       name: 'Pano Floral',
       description: 'Delicado pano de prato com estampa floral em tons de rosa. Feito à mão com muito carinho.',
       price: 'R$ 110,00',
-      image: '/donamariabentoart/floral.jpg'
+      image: 'floral.jpg'
     }
 ];
 
 const Products = () => {
-  // Use import.meta.env.BASE_URL to get the correct base path in all environments
-  const getImagePath = (path) => {
-    return import.meta.env.BASE_URL + path.replace('/donamariabentoart', '');
+  const getImagePath = (imageName) => {
+    return `${import.meta.env.BASE_URL}${imageName}`;
   };
-
   return (
     <div className="products-container">
       <div className="products-header">
@@ -61,7 +59,7 @@ const Products = () => {
                 alt={product.name} 
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = import.meta.env.BASE_URL + '/placeholder.jpg';
+                  e.target.src = `${import.meta.env.BASE_URL}placeholder.jpg`;
                 }}
               />
             </div>
