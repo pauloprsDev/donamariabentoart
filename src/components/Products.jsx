@@ -2,13 +2,13 @@ import React from 'react'
 import './Products.css'
 
 const products = [
-    {
-      id: 1,
-      name: 'Cozinhar é só um jeito diferente de amar',
-      description: 'Lindo pano de prato todo trabalhado na pintura em detalhes magenta! Escolha o que mais combina com a sua decoração 🥰',
-      price: 'R$ 120,00',
-      image: 'cozinhareamar.jpg'
-    },
+  {
+    id: 1,
+    name: 'Cozinhar é só um jeito diferente de amar',
+    description: 'Lindo pano de prato todo trabalhado na pintura em detalhes magenta! Escolha o que mais combina com a sua decoração 🥰',
+    price: 'R$ 120,00',
+    image: `cozinhareamar.jpg`
+  },
     {
       id: 2,
       name: 'Coisas Boas Acontecem Aqui',

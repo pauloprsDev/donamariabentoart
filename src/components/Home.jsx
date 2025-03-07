@@ -26,17 +26,17 @@ function Home() {
     {
       title: "Coleção Floral",
       description: "Hortênsias em tons de azul e roxo, pintadas à mão com delicadeza e amor",
-      image: "./donamariabentoart/18920318-flores-de-lavanda-na-vista-superior-de-fundo-rosa-copie-o-espaco-foto.jpg"
+      image: `./18920318-flores-de-lavanda-na-vista-superior-de-fundo-rosa-copie-o-espaco-foto.jpg`
     },
     {
       title: "Série Abstrata",
       description: "Panos de prato com frases inspiradoras e designs exclusivos",
-      image: "./donamariabentoart/cozinhareamar.jpg"
+      image: "./cozinhareamar.jpg"
     },
     {
       title: "Inspiração Natural",
       description: "Designs inspirados na natureza",
-      image: "./donamariabentoart/coisas_boas_acontecem.jpg"
+      image: "./coisas_boas_acontecem.jpg"
     }
   ]
   
@@ -55,56 +55,11 @@ function Home() {
               className="logo-wrapper"
             >
               <img 
-                src="/donamariabentoart/logo.jpg"
+                src={`${import.meta.env.BASE_URL}logo.jpg`}
                 alt="Dona Maria Bento Art Logo" 
                 className="home-logo"
-                style={{
-                  maxWidth: '200px',
-                  margin: '0 auto',
-                  borderRadius: '8px',
-                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
-                }}
               />
             </motion.div>
-            
-            {/* Rest of the component remains unchanged */}
-            <motion.h1
-              variants={fadeInUp}
-              className="hero-title"
-            >
-              Dona Maria Bento
-            </motion.h1>
-            <motion.p
-              variants={fadeInUp}
-              className="hero-subtitle"
-            >
-              <FaHeart style={{ color: '#B76E79', verticalAlign: 'middle', marginRight: '8px' }} />
-              Produto Artesanal feito com muito amor
-              <FaHeart style={{ color: '#B76E79', verticalAlign: 'middle', marginLeft: '8px' }} />
-            </motion.p>
-            <motion.div
-              variants={fadeInUp}
-              className="cta-wrapper"
-            >
-              
-              <Link to="/products" className="cta-button">
-                Explorar Coleção
-              </Link>
-            </motion.div>
-          </motion.div>
-        </section>
-
-        <section className="featured">
-          <div className="container">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
-              className="section-title"
-            >
-              Destaques da Coleção
-            </motion.h2>
             <div className="featured-grid">
               {featuredItems.map((item, index) => (
                 <motion.div 
@@ -116,12 +71,7 @@ function Home() {
                   transition={{ delay: index * 0.2, duration: 0.5 }}
                 >
                   <div className="featured-item-image">
-                    <motion.img 
-                      src={item.image} 
-                      alt={item.title}
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
-                    />
+                    <img src={item.image} alt={item.title} />
                   </div>
                   <div className="featured-item-content">
                     <h3>{item.title}</h3>
@@ -130,7 +80,7 @@ function Home() {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </section>
 
         <section className="about-preview">
