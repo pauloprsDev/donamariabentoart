@@ -7,12 +7,13 @@ import Navbar from './components/Navbar'
 import Loading from './components/Loading'
 import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
+import ErrorBoundary from './components/ErrorBoundary'
 
-// Lazy load components
-const Home = React.lazy(() => import('./components/Home'))
-const Products = React.lazy(() => import('./components/Products'))
-const About = React.lazy(() => import('./components/About'))
-const Contact = React.lazy(() => import('./components/Contact'))
+// Import components directly
+import Home from './components/Home'
+import Products from './components/Products'
+import About from './components/About'
+import Contact from './components/Contact'
 
 // AnimatedRoutes component definition
 function AnimatedRoutes() {
@@ -25,6 +26,7 @@ function AnimatedRoutes() {
         <Route path="/products" element={<Products />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     </AnimatePresence>
   )
@@ -32,13 +34,13 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/donamariabentoart">
       <ScrollToTop />
       <div className="app">
         <Navbar />
-        <Suspense fallback={<Loading />}>
+        <ErrorBoundary>
           <AnimatedRoutes />
-        </Suspense>
+        </ErrorBoundary>
         <Footer />
       </div>
     </Router>

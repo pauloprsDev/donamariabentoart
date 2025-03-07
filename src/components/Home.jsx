@@ -20,24 +20,26 @@ const staggerChildren = {
   }
 }
 
+// Using public folder paths instead of imports
 function Home() {
   const featuredItems = [
     {
       title: "Coleção Floral",
       description: "Hortênsias em tons de azul e roxo, pintadas à mão com delicadeza e amor",
-      image: "18920318-flores-de-lavanda-na-vista-superior-de-fundo-rosa-copie-o-espaco-foto.jpg"
+      image: "/donamariabentoart/18920318-flores-de-lavanda-na-vista-superior-de-fundo-rosa-copie-o-espaco-foto.jpg"
     },
     {
       title: "Série Abstrata",
       description: "Panos de prato com frases inspiradoras e designs exclusivos",
-      image: "cozinhareamar.jpg"
+      image: "/donamariabentoart/cozinhareamar.jpg"
     },
     {
       title: "Inspiração Natural",
       description: "Designs inspirados na natureza",
-      image: "coisas_boas_acontecem.jpg"
+      image: "/donamariabentoart/coisas_boas_acontecem.jpg"
     }
   ]
+  
   return (
     <PageTransition>
       <main className="home">
@@ -53,7 +55,7 @@ function Home() {
               className="logo-wrapper"
             >
               <img 
-                src="/logo.jpg" 
+                src="/donamariabentoart/logo.jpg"
                 alt="Dona Maria Bento Art Logo" 
                 className="home-logo"
                 style={{
@@ -64,6 +66,8 @@ function Home() {
                 }}
               />
             </motion.div>
+            
+            {/* Rest of the component remains unchanged */}
             <motion.h1
               variants={fadeInUp}
               className="hero-title"
@@ -82,6 +86,7 @@ function Home() {
               variants={fadeInUp}
               className="cta-wrapper"
             >
+              
               <Link to="/products" className="cta-button">
                 Explorar Coleção
               </Link>

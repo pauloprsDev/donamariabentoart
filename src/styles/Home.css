@@ -3,7 +3,6 @@
   min-height: 100vh;
   overflow-x: hidden;
 }
-
 .home::before {
   content: '';
   position: fixed;
@@ -12,18 +11,16 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(rgba(255, 240, 245, 0.7), rgba(255, 240, 245, 0.7)),
-              url('/18920318-flores-de-lavanda-na-vista-superior-de-fundo-rosa-copie-o-espaco-foto.jpg');
+              url('/Confira-as-5-flores-para-plantar-no-inverno-em-qualquer-regiao-do-Brasil.jpg');
   background-size: cover;
   background-position: right center;
   opacity: 0.95;
   z-index: -1;
 }
-
 .hero {
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(3px);
 }
-
 .hero-content {
   background: rgba(255, 255, 255, 0.8);
 }

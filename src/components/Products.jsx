@@ -4,21 +4,36 @@ import React from 'react'
 import './Products.css'
 
 const products = [
-    {
-      id: 1,
-      name: 'Cozinhar é só um jeito diferente de amar',
-      description: 'Lindo pano de prato todo trabalhado na pintura em detalhes magenta! Escolha o que mais combina com a sua decoração 🥰',
-      price: 'R$ 120,00',
-      image: '/cozinhareamar.jpg'
-    },
-    {
-      id: 2,
-      name: 'Coisas Boas Acontecem Aqui',
-      description: 'Pano de prato frase "coisas boas acontecem aqui" feito a mão em pano 100%algodão- 41x66cm',
-      price: 'R$ 135,00',
-      image: '/coisas_boas_acontecem.jpg'
-    }
+  {
+    id: 1,
+    name: 'Cozinhar é só um jeito diferente de amar',
+    description: 'Lindo pano de prato todo trabalhado na pintura em detalhes magenta! Escolha o que mais combina com a sua decoração 🥰',
+    price: 'R$ 120,00',
+    image: '/donamariabentoart/cozinhareamar.jpg'
+  },
+  {
+    id: 2,
+    name: 'Coisas boas acontecem aqui',
+    description: 'Pano de prato artesanal com frase inspiradora, pintado à mão em tecido 100% algodão. Perfeito para decorar sua cozinha com estilo.',
+    price: 'R$ 115,00',
+    image: '/donamariabentoart/coisas_boas_acontecem.jpg'
+  },
+  {
+    id: 3,
+    name: 'Eu me lembro de quando',
+    description: 'Pano de prato com bordado em tons de rosa e verde, com frase nostálgica e detalhes de folhagens. Tecido 100% algodão.',
+    price: 'R$ 125,00',
+    image: '/donamariabentoart/floral.jpg'
+  },
+  {
+    id: 4,
+    name: 'Pano de Prato Floral',
+    description: 'Delicado pano de prato com estampa floral em tons de rosa. Feito à mão com muito carinho.',
+    price: 'R$ 110,00',
+    image: '/donamariabentoart/pano_floral.jpg'
+  }
 ]
+
 const Products = () => {
   return (
     <div className="products-container">
@@ -30,7 +45,7 @@ const Products = () => {
       <div className="products-filter">
         <button className="filter-button active">Todos</button>
         <button className="filter-button">Florais</button>
-        <button className="filter-button">Abstratos</button>
+        <button className="filter-button">Frases</button>
         <button className="filter-button">Personalizados</button>
       </div>
 
@@ -43,7 +58,7 @@ const Products = () => {
                 alt={product.name} 
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = './images/placeholder.jpg';
+                  e.target.src = '/donamariabentoart/placeholder.jpg';
                 }}
               />
             </div>
