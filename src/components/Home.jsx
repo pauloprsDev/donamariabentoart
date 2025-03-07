@@ -26,17 +26,17 @@ function Home() {
     {
       title: "Coleção Floral",
       description: "Hortênsias em tons de azul e roxo, pintadas à mão com delicadeza e amor",
-      image: `./18920318-flores-de-lavanda-na-vista-superior-de-fundo-rosa-copie-o-espaco-foto.jpg`
+      image: `${import.meta.env.BASE_URL}18920318-flores-de-lavanda-na-vista-superior-de-fundo-rosa-copie-o-espaco-foto.jpg`
     },
     {
       title: "Série Abstrata",
       description: "Panos de prato com frases inspiradoras e designs exclusivos",
-      image: "./cozinhareamar.jpg"
+      image: `${import.meta.env.BASE_URL}cozinhareamar.jpg`
     },
     {
       title: "Inspiração Natural",
       description: "Designs inspirados na natureza",
-      image: "./coisas_boas_acontecem.jpg"
+      image: `${import.meta.env.BASE_URL}coisas_boas_acontecem.jpg`
     }
   ]
   
