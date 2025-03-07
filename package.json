@@ -1,4 +1,5 @@
-{
+{ 
+  "homepage": "pauloprsDev.github.io/donamariabentoart",
   "name": "vite-project",
   "private": true,
   "version": "0.0.0",
@@ -34,5 +35,7 @@
   "main": "eslint.config.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
 }
