@@ -26,17 +26,17 @@ function Home() {
     {
       title: "Coleção Floral",
       description: "Hortênsias em tons de azul e roxo, pintadas à mão com delicadeza e amor",
-      image: "/donamariabentoart/18920318-flores-de-lavanda-na-vista-superior-de-fundo-rosa-copie-o-espaco-foto.jpg"
+      image: "./donamariabentoart/18920318-flores-de-lavanda-na-vista-superior-de-fundo-rosa-copie-o-espaco-foto.jpg"
     },
     {
       title: "Série Abstrata",
       description: "Panos de prato com frases inspiradoras e designs exclusivos",
-      image: "/donamariabentoart/cozinhareamar.jpg"
+      image: "./donamariabentoart/cozinhareamar.jpg"
     },
     {
       title: "Inspiração Natural",
       description: "Designs inspirados na natureza",
-      image: "/donamariabentoart/coisas_boas_acontecem.jpg"
+      image: "./donamariabentoart/coisas_boas_acontecem.jpg"
     }
   ]
   
