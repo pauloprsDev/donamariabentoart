@@ -36,7 +36,7 @@ function Home() {
     {
       title: "Inspiração Natural",
       description: "Designs inspirados na natureza",
-      image: `${import.meta.env.BASE_URL}coisas_boas_acontecem.jpg`
+      image: `coisas_boas_acontecem.jpg`
     }
   ]
   
@@ -55,7 +55,7 @@ function Home() {
               className="logo-wrapper"
             >
               <img 
-                src={`${import.meta.env.BASE_URL}logo.jpg`}
+                src={`logo.jpg`}
                 alt="Dona Maria Bento Art Logo" 
                 className="home-logo"
               />

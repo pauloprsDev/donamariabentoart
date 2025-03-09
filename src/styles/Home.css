@@ -11,7 +11,7 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(rgba(255, 240, 245, 0.7), rgba(255, 240, 245, 0.7)),
-              url('${import.meta.env.BASE_URL}background-lavender.jpg');
+              url('/donamariabentoart/background-lavender.jpg');
   background-size: cover;
   background-position: right center;
   opacity: 0.95;
@@ -150,14 +150,30 @@
   .featured-grid {
     grid-template-columns: 1fr;
   }
-.logo-wrapper {
-  text-align: center;
-  margin-bottom: 2rem;
 }
+
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
 .home-logo {
-  display: block;
-  max-width: 200px;
+  max-width: 250px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}}
+  display: block;
+}
+
+/* Para dispositivos móveis */
+@media (max-width: 768px) {
+  .home-logo {
+    max-width: 180px;
+  }
+}
+
+
+ 

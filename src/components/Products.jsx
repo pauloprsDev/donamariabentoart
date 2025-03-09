@@ -1,4 +1,7 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react'
+
+import { motion } from 'framer-motion';
 import './Products.css'
 
 const products = [
@@ -7,15 +10,17 @@ const products = [
     name: 'Cozinhar é só um jeito diferente de amar',
     description: 'Lindo pano de prato todo trabalhado na pintura em detalhes magenta! Escolha o que mais combina com a sua decoração 🥰',
     price: 'R$ 120,00',
-    image: `cozinhareamar.jpg`
+    image: 'cozinhareamar.jpg',
+    category: 'frases'
   },
-    {
-      id: 2,
-      name: 'Coisas Boas Acontecem Aqui',
-      description: 'Pano de prato frase "coisas boas acontecem aqui" feito a mão em pano 100%algodão- 41x66cm',
-      price: 'R$ 135,00',
-      image: 'coisas_boas_acontecem.jpg'
-    },
+  {
+    id: 2,
+    name: 'Coisas Boas Acontecem Aqui',
+    description: 'Pano de prato frase "coisas boas acontecem aqui" feito a mão em pano 100%algodão- 41x66cm',
+    price: 'R$ 135,00',
+    image: 'coisas_boas_acontecem.jpg',
+    category: 'frases'
+  },
     {
       id: 3,
       name: 'Eu me lembro de quando',
@@ -33,26 +38,82 @@ const products = [
 ];
 
 const Products = () => {
+  const [filter, setFilter] = useState('todos');
+  
   const getImagePath = (imageName) => {
     return `${import.meta.env.BASE_URL}${imageName}`;
   };
+  
+  const filteredProducts = filter === 'todos' 
+    ? products 
+    : products.filter(product => product.category === filter);
+  
   return (
-    <div className="products-container">
+    <motion.div 
+      className="products-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="products-header">
-        <h1>Nossa Coleção</h1>
-        <p>Cada peça é única e pintada à mão com carinho</p>
+        <motion.h1 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          Nossa Coleção
+        </motion.h1>
+        <motion.p
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Cada peça é única e pintada à mão com carinho
+        </motion.p>
       </div>
       
-      <div className="products-filter">
-        <button className="filter-button active">Todos</button>
-        <button className="filter-button">Florais</button>
-        <button className="filter-button">Frases</button>
-        <button className="filter-button">Personalizados</button>
-      </div>
+      <motion.div 
+        className="products-filter"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4 }}
+      >
+        <button 
+          className={`filter-button ${filter === 'todos' ? 'active' : ''}`}
+          onClick={() => setFilter('todos')}
+        >
+          Todos
+        </button>
+        <button 
+          className={`filter-button ${filter === 'florais' ? 'active' : ''}`}
+          onClick={() => setFilter('florais')}
+        >
+          Florais
+        </button>
+        <button 
+          className={`filter-button ${filter === 'frases' ? 'active' : ''}`}
+          onClick={() => setFilter('frases')}
+        >
+          Frases
+        </button>
+        <button 
+          className={`filter-button ${filter === 'personalizados' ? 'active' : ''}`}
+          onClick={() => setFilter('personalizados')}
+        >
+          Personalizados
+        </button>
+      </motion.div>
 
       <div className="products-grid">
-        {products.map(product => (
-          <div key={product.id} className="product-card">
+        {filteredProducts.map((product, index) => (
+          <motion.div 
+            key={product.id} 
+            className="product-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 + index * 0.1 }}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
             <div className="product-image">
               <img 
                 src={getImagePath(product.image)} 
@@ -62,16 +123,22 @@ const Products = () => {
                   e.target.src = `${import.meta.env.BASE_URL}placeholder.jpg`;
                 }}
               />
+              <div className="product-overlay">
+                <button className="view-details">Ver Detalhes</button>
+              </div>
             </div>
             <div className="product-info">
               <h3>{product.name}</h3>
               <p>{product.description}</p>
-              <span className="product-price">{product.price}</span>
+              <div className="product-footer">
+                <span className="product-price">{product.price}</span>
+                <button className="add-to-cart">Comprar</button>
+              </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   )
 }
 

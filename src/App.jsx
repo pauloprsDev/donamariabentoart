@@ -2,7 +2,7 @@
 import React, { Suspense } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Loading from './components/Loading'
 import ScrollToTop from './components/ScrollToTop'
@@ -11,7 +11,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 
 // Import components directly
 import Home from './components/Home'
-import Products from './components/Products'
+import Products from './components/products'
 import About from './components/About'
 import Contact from './components/Contact'
 
@@ -34,7 +34,7 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <Router basename="/donamariabentoart">
+    <Router>
       <ScrollToTop />
       <div className="app">
         <Navbar />
