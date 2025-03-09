@@ -13,11 +13,27 @@
   color: #4A2545;
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.contact-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #B76E79, #4A2545);
+  border-radius: 3px;
 }
 
 .contact-header p {
   color: #6B4984;
   font-size: 1.2rem;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
 }
 
 .contact-grid {
@@ -31,6 +47,8 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 .contact-card {
@@ -38,29 +56,79 @@
   padding: 2rem;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border: 2px solid transparent;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(183, 110, 121, 0.1), rgba(74, 37, 69, 0.1));
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s ease;
+}
+
+.contact-card::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #B76E79, #4A2545);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease 0.1s;
 }
 
 .contact-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  border-color: rgba(183, 110, 121, 0.1);
+}
+
+.contact-card:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.contact-card:hover::after {
+  transform: scaleX(1);
 }
 
 .contact-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #B76E79;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.contact-card:hover .contact-icon {
+  transform: scale(1.2);
 }
 
 .contact-card h3 {
   color: #4A2545;
   margin-bottom: 1rem;
+  font-size: 1.3rem;
 }
 
-.contact-card a {
+.contact-card a, .contact-card p {
   color: #6B4984;
   text-decoration: none;
   transition: color 0.3s ease;
+  font-size: 1.1rem;
+  display: block;
 }
 
 .contact-card a:hover {
@@ -69,15 +137,62 @@
 
 .contact-message {
   background: white;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-message::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(to bottom, #B76E79, #4A2545);
 }
 
 .contact-message h2 {
   color: #4A2545;
   margin-bottom: 2rem;
   text-align: center;
+  font-size: 1.8rem;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.contact-message h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #B76E79, transparent);
+}
+
+.form-message {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.form-message.success {
+  background: rgba(46, 213, 115, 0.15);
+  color: #2ed573;
+  border-left: 4px solid #2ed573;
+}
+
+.form-message.error {
+  background: rgba(255, 71, 87, 0.15);
+  color: #ff4757;
+  border-left: 4px solid #ff4757;
 }
 
 .form-group {
@@ -87,50 +202,88 @@
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 1.2rem;
   border: 2px solid #E6E3F4;
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: #f9f8ff;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
   border-color: #B76E79;
+  box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.2);
+  background-color: white;
 }
 
 .submit-button {
   width: 100%;
-  padding: 1rem;
+  padding: 1.1rem;
   background: linear-gradient(135deg, #B76E79, #9B4F58);
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.submit-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #9B4F58, #4A2545);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .submit-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(183, 110, 121, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(183, 110, 121, 0.4);
+}
+
+.submit-button:hover::before {
+  opacity: 1;
+}
+
+.submit-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(183, 110, 121, 0.4);
 }
 
 @media (max-width: 968px) {
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 3rem;
   }
 }
 
 @media (max-width: 768px) {
   .contact-info {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .contact-container {
-    padding: 2rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+  
+  .contact-header h1 {
+    font-size: 2rem;
+  }
+  
+  .contact-message {
+    padding: 2rem 1.5rem;
   }
 }
 
@@ -141,20 +294,30 @@
 }
 
 .contact-image {
-  background: url('/images/Confira-as-5-flores-para-plantar-no-inverno-em-qualquer-regiao-do-Brasil.jpg');
   background-size: cover;
   background-position: center;
   position: sticky;
   top: 0;
   height: 100vh;
+  position: relative;
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.3);
+}
+
+.contact-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.4), transparent);
 }
 
 .contact-container {
-  padding: 4rem 2rem;
-  background: rgba(255, 255, 255, 0.95);
+  padding: 4rem 3rem;
+  background: rgba(255, 255, 255, 0.97);
 }
 
-/* Add this media query at the bottom of your existing CSS */
 @media (max-width: 1024px) {
   .contact-wrapper {
     grid-template-columns: 1fr;
@@ -163,5 +326,9 @@
   .contact-image {
     height: 300px;
     position: relative;
+  }
+  
+  .contact-image::after {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
   }
 }
