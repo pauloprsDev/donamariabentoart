@@ -8,6 +8,9 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(183, 110, 121, 0.1);
+  transition: all 0.3s ease;
 }
 
 .navbar-brand a {
@@ -15,6 +18,12 @@
   text-decoration: none;
   font-size: 1.5rem;
   font-weight: bold;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand a:hover {
+  color: #B76E79;
 }
 
 .navbar-links {
@@ -26,7 +35,24 @@
   color: #6B4984;
   text-decoration: none;
   font-size: 1.1rem;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #B76E79;
+  transition: width 0.3s ease;
+}
+
+.navbar-links a:hover::after {
+  width: 100%;
 }
 
 .navbar-links a:hover {
@@ -46,6 +72,11 @@
 @media (max-width: 768px) {
   .mobile-menu-btn {
     display: block;
+    transition: transform 0.3s ease;
+  }
+  
+  .mobile-menu-btn:hover {
+    transform: rotate(90deg);
   }
 
   .navbar-links {
@@ -55,28 +86,131 @@
     left: 0;
     right: 0;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 1rem;
-    gap: 1rem;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 1.5rem;
+    gap: 1.2rem;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: all 0.3s ease;
   }
 
   .navbar-links.active {
     display: flex;
+    transform: translateY(0);
+    opacity: 1;
   }
 
   .navbar-links a {
-    padding: 0.5rem 0;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(107, 73, 132, 0.1);
+  }
+  
+  .navbar-links a:last-child {
+    border-bottom: none;
   }
 }
 
 @media (max-width: 480px) {
   .navbar {
-    padding: 1rem;
+    padding: 0.8rem 1rem;
   }
 
   .navbar-brand a {
     font-size: 1.2rem;
+  }
+  
+  .nav-logo {
+    height: 38px;
+    width: 38px;
+  }
+}
+
+
+/* Add these styles to your existing Navbar.css */
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1rem;
+}
+
+.nav-logo {
+  height: 45px;
+  width: 45px;
+  border-radius: none;
+  object-fit: contain;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.nav-logo:hover {
+  transform: scale(1.08) rotate(2deg);
+  filter: drop-shadow(0 4px 8px rgba(183, 110, 121, 0.3));
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  
+  .mobile-menu-btn:hover {
+    transform: rotate(90deg);
+  }
+
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 1.5rem;
+    gap: 1.2rem;
+    text-align: center;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-links.active {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .navbar-links a {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(107, 73, 132, 0.1);
+  }
+  
+  .navbar-links a:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .navbar-brand a {
+    font-size: 1.2rem;
+  }
+  
+  .nav-logo {
+    height: 38px;
+    width: 38px;
   }
 }

@@ -2,11 +2,26 @@
   padding: 4rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+}
+
+.contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('${import.meta.env.BASE_URL}pattern-bg.png');
+  background-size: 200px;
+  opacity: 0.03;
+  pointer-events: none;
 }
 
 .contact-header {
   text-align: center;
   margin-bottom: 4rem;
+  position: relative;
 }
 
 .contact-header h1 {
@@ -27,6 +42,11 @@
   height: 3px;
   background: linear-gradient(90deg, #B76E79, #4A2545);
   border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.contact-header:hover h1::after {
+  width: 120px;
 }
 
 .contact-header p {
@@ -34,6 +54,7 @@
   font-size: 1.2rem;
   max-width: 600px;
   margin: 1.5rem auto 0;
+  line-height: 1.6;
 }
 
 .contact-grid {
@@ -57,11 +78,12 @@
   border-radius: 15px;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
   z-index: 1;
   border: 2px solid transparent;
+  backdrop-filter: blur(5px);
 }
 
 .contact-card::before {
@@ -85,7 +107,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #B76E79, #4A2545);
+  background: linear-gradient(90deg, var(--secondary), var(--accent-gold));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s ease 0.1s;
@@ -95,6 +117,7 @@
   transform: translateY(-10px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
   border-color: rgba(183, 110, 121, 0.1);
+  background-color: var(--neutral-lightest);
 }
 
 .contact-card:hover::before {
@@ -108,23 +131,24 @@
 
 .contact-icon {
   font-size: 2.5rem;
-  color: #B76E79;
+  color: var(--secondary);
   margin-bottom: 1.5rem;
   transition: transform 0.3s ease;
 }
 
 .contact-card:hover .contact-icon {
   transform: scale(1.2);
+  color: var(--accent-gold);
 }
 
 .contact-card h3 {
-  color: #4A2545;
+  color: var(--primary-dark);
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
 
 .contact-card a, .contact-card p {
-  color: #6B4984;
+  color: var(--primary-light);
   text-decoration: none;
   transition: color 0.3s ease;
   font-size: 1.1rem;
@@ -132,7 +156,7 @@
 }
 
 .contact-card a:hover {
-  color: #B76E79;
+  color: var(--accent-sage);
 }
 
 .contact-message {
@@ -142,6 +166,8 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(183, 110, 121, 0.1);
 }
 
 .contact-message::before {
@@ -197,6 +223,22 @@
 
 .form-group {
   margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #4A2545;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  transform-origin: left;
+}
+
+.form-group input:focus + label,
+.form-group textarea:focus + label {
+  transform: scale(0.9);
+  color: #B76E79;
 }
 
 .form-group input,
@@ -232,6 +274,7 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
+  letter-spacing: 0.5px;
 }
 
 .submit-button::before {
@@ -261,13 +304,55 @@
   box-shadow: 0 3px 10px rgba(183, 110, 121, 0.4);
 }
 
-@media (max-width: 968px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+/* Adicionar animação de carregamento */
+.submit-button.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.submit-button.loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
+/* Adicionar feedback de sucesso */
+.form-success {
+  background-color: rgba(46, 213, 115, 0.1);
+  border-left: 4px solid #2ed573;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Melhorar responsividade */
 @media (max-width: 768px) {
   .contact-info {
     grid-template-columns: 1fr;
@@ -285,50 +370,38 @@
   .contact-message {
     padding: 2rem 1.5rem;
   }
-}
-
-.contact-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  min-height: 100vh;
-}
-
-.contact-image {
-  background-size: cover;
-  background-position: center;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  position: relative;
-  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.3);
-}
-
-.contact-image::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(0,0,0,0.4), transparent);
-}
-
-.contact-container {
-  padding: 4rem 3rem;
-  background: rgba(255, 255, 255, 0.97);
-}
-
-@media (max-width: 1024px) {
-  .contact-wrapper {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-image {
-    height: 300px;
-    position: relative;
-  }
   
-  .contact-image::after {
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+  .contact-card {
+    padding: 1.5rem;
+  }
+}
+
+/* Adicionar animação de entrada para os cards */
+.contact-card {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.contact-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.contact-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.contact-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.contact-card:nth-child(4) {
+  animation-delay: 0.7s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

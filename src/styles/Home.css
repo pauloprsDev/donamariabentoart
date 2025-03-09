@@ -156,22 +156,266 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
-  width: 100%;
+  position: relative;
+  padding: 20px;
 }
 
+.logo-background {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(183, 110, 121, 0.15) 0%, rgba(74, 37, 69, 0.08) 60%, transparent 100%);
+  border-radius: 50%;
+  z-index: -1;
+  animation: pulse 6s infinite alternate ease-in-out;
+  box-shadow: 0 0 40px rgba(183, 110, 121, 0.15);
+}
+
+/* Flower decorations */
+.flower-decoration {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+  filter: drop-shadow(0 0 5px rgba(183, 110, 121, 0.2));
+}
+
+.flower-decoration::before,
+.flower-decoration::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(183, 110, 121, 0.25);
+  border-radius: 50%;
+}
+
+/* Create flower petals */
+.flower-decoration::before {
+  animation: rotatePetal 12s linear infinite;
+}
+
+.flower-decoration::after {
+  animation: rotatePetal 12s linear infinite reverse;
+}
+
+/* Position multiple flowers */
+.flower-1 {
+  top: 5%;
+  left: 12%;
+  transform: scale(0.8);
+  animation: floatFlower 7s infinite alternate ease-in-out;
+}
+
+.flower-2 {
+  top: 15%;
+  right: 15%;
+  transform: scale(1.2);
+  animation: floatFlower 9s infinite alternate-reverse ease-in-out;
+}
+
+.flower-3 {
+  bottom: 12%;
+  left: 18%;
+  transform: scale(0.7);
+  animation: floatFlower 8s infinite alternate ease-in-out;
+}
+
+.flower-4 {
+  bottom: 20%;
+  right: 12%;
+  transform: scale(1);
+  animation: floatFlower 10s infinite alternate-reverse ease-in-out;
+}
+
+.flower-5 {
+  top: 40%;
+  left: 8%;
+  transform: scale(0.6);
+  animation: floatFlower 11s infinite alternate ease-in-out;
+}
+
+.flower-6 {
+  top: 35%;
+  right: 8%;
+  transform: scale(0.5);
+  animation: floatFlower 9.5s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes rotatePetal {
+  from {
+    transform: rotate(0deg) translate(18px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translate(18px) rotate(-360deg);
+  }
+}
+
+@keyframes floatFlower {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(10px, -10px) rotate(45deg) scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+/* Add flower petals */
+.flower-petal {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: rgba(183, 110, 121, 0.2);
+  border-radius: 50% 50% 0 50%;
+  transform-origin: bottom right;
+}
+
+.flower-center {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: rgba(74, 37, 69, 0.25);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 5px rgba(74, 37, 69, 0.1);
+}
+
+/* Position petals around center - more rose-like arrangement */
+.petal-1 { transform: rotate(0deg) translateY(-15px) rotate(45deg); }
+.petal-2 { transform: rotate(72deg) translateY(-15px) rotate(45deg); }
+.petal-3 { transform: rotate(144deg) translateY(-15px) rotate(45deg); }
+.petal-4 { transform: rotate(216deg) translateY(-15px) rotate(45deg); }
+.petal-5 { transform: rotate(288deg) translateY(-15px) rotate(45deg); }
+.petal-6 { transform: rotate(30deg) translateY(-10px) rotate(45deg); scale: 0.8; }
+.petal-7 { transform: rotate(102deg) translateY(-10px) rotate(45deg); scale: 0.8; }
+.petal-8 { transform: rotate(174deg) translateY(-10px) rotate(45deg); scale: 0.8; }
+.petal-9 { transform: rotate(246deg) translateY(-10px) rotate(45deg); scale: 0.8; }
+.petal-10 { transform: rotate(318deg) translateY(-10px) rotate(45deg); scale: 0.8; }
+
 .home-logo {
-  max-width: 250px;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  display: block;
+  max-width: 220px;
+  border-radius: 10px; /* Changed from 50% to 10px for square with slightly rounded corners */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 5px solid white;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
 /* Para dispositivos móveis */
 @media (max-width: 768px) {
   .home-logo {
     max-width: 180px;
+  }
+  
+  .logo-background {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(-15deg);
+  }
+  100% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+}
+
+.logo-wrapper::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 20px;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 70%);
+  opacity: 0.5;
+}
+
+/* Para dispositivos móveis */
+@media (max-width: 768px) {
+  .home-logo {
+    max-width: 180px;
+  }
+  
+  .logo-background {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .logo-background::before,
+  .logo-background::after {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Decorative elements around the logo */
+.logo-decoration {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: #B76E79;
+  border-radius: 50%;
+  z-index: 1;
+  filter: blur(1px);
+}
+
+.logo-decoration-1 {
+  top: 20%;
+  right: 30%;
+  animation: floatParticle 4s infinite alternate ease-in-out;
+}
+
+.logo-decoration-2 {
+  bottom: 30%;
+  left: 25%;
+  width: 10px;
+  height: 10px;
+  background-color: #4A2545;
+  animation: floatParticle 5s infinite alternate-reverse ease-in-out;
+}
+
+.logo-decoration-3 {
+  top: 50%;
+  left: 20%;
+  width: 12px;
+  height: 12px;
+  background-color: #B76E79;
+  opacity: 0.6;
+  animation: floatParticle 6s infinite alternate ease-in-out;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(10px, -10px);
   }
 }
 

@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaHeart } from 'react-icons/fa'
 // eslint-disable-next-line no-unused-vars
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import PageTransition from './PageTransition'
 import '../styles/Home.css'
 
@@ -36,9 +37,13 @@ function Home() {
     {
       title: "Inspiração Natural",
       description: "Designs inspirados na natureza",
-      image: `coisas_boas_acontecem.jpg`
+      image: `${import.meta.env.BASE_URL}coisas_boas_acontecem.jpg`
     }
   ]
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 300], [0, -50]);
+  const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0.6]);
   
   return (
     <PageTransition>
@@ -51,11 +56,95 @@ function Home() {
             animate="animate"
           >
             <motion.div
-              variants={fadeInUp}
               className="logo-wrapper"
+              initial={{ scale: 0.5, opacity: 0, rotate: -10 }}
+              animate={{ scale: 1, opacity: 1, rotate: 0 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 260, 
+                damping: 20,
+                delay: 0.2
+              }}
             >
+              <div className="logo-background"></div>
+              
+              {/* Enhanced rose decorations */}
+              <div className="flower-decoration flower-1">
+                <div className="flower-center"></div>
+                <div className="flower-petal petal-1"></div>
+                <div className="flower-petal petal-2"></div>
+                <div className="flower-petal petal-3"></div>
+                <div className="flower-petal petal-4"></div>
+                <div className="flower-petal petal-5"></div>
+                <div className="flower-petal petal-6"></div>
+                <div className="flower-petal petal-7"></div>
+                <div className="flower-petal petal-8"></div>
+                <div className="flower-petal petal-9"></div>
+                <div className="flower-petal petal-10"></div>
+              </div>
+              
+              <div className="flower-decoration flower-2">
+                <div className="flower-center"></div>
+                <div className="flower-petal petal-1"></div>
+                <div className="flower-petal petal-2"></div>
+                <div className="flower-petal petal-3"></div>
+                <div className="flower-petal petal-4"></div>
+                <div className="flower-petal petal-5"></div>
+                <div className="flower-petal petal-6"></div>
+                <div className="flower-petal petal-7"></div>
+                <div className="flower-petal petal-8"></div>
+                <div className="flower-petal petal-9"></div>
+                <div className="flower-petal petal-10"></div>
+              </div>
+              
+              <div className="flower-decoration flower-3">
+                <div className="flower-center"></div>
+                <div className="flower-petal petal-1"></div>
+                <div className="flower-petal petal-2"></div>
+                <div className="flower-petal petal-3"></div>
+                <div className="flower-petal petal-4"></div>
+                <div className="flower-petal petal-5"></div>
+                <div className="flower-petal petal-6"></div>
+                <div className="flower-petal petal-7"></div>
+                <div className="flower-petal petal-8"></div>
+                <div className="flower-petal petal-9"></div>
+                <div className="flower-petal petal-10"></div>
+              </div>
+              
+              <div className="flower-decoration flower-4">
+                <div className="flower-center"></div>
+                <div className="flower-petal petal-1"></div>
+                <div className="flower-petal petal-2"></div>
+                <div className="flower-petal petal-3"></div>
+                <div className="flower-petal petal-4"></div>
+                <div className="flower-petal petal-5"></div>
+                <div className="flower-petal petal-6"></div>
+                <div className="flower-petal petal-7"></div>
+                <div className="flower-petal petal-8"></div>
+                <div className="flower-petal petal-9"></div>
+                <div className="flower-petal petal-10"></div>
+              </div>
+              
+              <div className="flower-decoration flower-5">
+                <div className="flower-center"></div>
+                <div className="flower-petal petal-1"></div>
+                <div className="flower-petal petal-2"></div>
+                <div className="flower-petal petal-3"></div>
+                <div className="flower-petal petal-4"></div>
+                <div className="flower-petal petal-5"></div>
+              </div>
+              
+              <div className="flower-decoration flower-6">
+                <div className="flower-center"></div>
+                <div className="flower-petal petal-1"></div>
+                <div className="flower-petal petal-2"></div>
+                <div className="flower-petal petal-3"></div>
+                <div className="flower-petal petal-4"></div>
+                <div className="flower-petal petal-5"></div>
+              </div>
+              
               <img 
-                src={`logo.jpg`}
+                src={`${import.meta.env.BASE_URL}logo.jpeg`}
                 alt="Dona Maria Bento Art Logo" 
                 className="home-logo"
               />
