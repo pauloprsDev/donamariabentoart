@@ -1,0 +1,235 @@
+/* Admin Login Styles */
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 2rem;
+  background-color: #f9f9f9;
+}
+
+.admin-login-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(74, 37, 69, 0.15), 0 6px 12px rgba(183, 110, 121, 0.1);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.admin-login-card h1 {
+  color: #4A2545;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.admin-login-card p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.admin-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #4A2545;
+  font-weight: 500;
+}
+
+.admin-form-group input,
+.admin-form-group textarea,
+.admin-form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.admin-form-group input:focus,
+.admin-form-group textarea:focus,
+.admin-form-group select:focus {
+  border-color: #B76E79;
+  outline: none;
+}
+
+.admin-login-button,
+.admin-submit-button,
+.admin-logout-button {
+  background-color: #B76E79;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.admin-login-button:hover,
+.admin-submit-button:hover {
+  background-color: #4A2545;
+  transform: translateY(-2px);
+}
+
+.admin-error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+/* Admin Dashboard Styles */
+.admin-dashboard {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-header h1 {
+  color: #4A2545;
+  font-family: 'Playfair Display', serif;
+}
+
+.admin-logout-button {
+  background-color: transparent;
+  color: #B76E79;
+  border: 2px solid #B76E79;
+}
+
+.admin-logout-button:hover {
+  background-color: #B76E79;
+  color: white;
+}
+
+.admin-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.admin-add-product,
+.admin-product-list {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+}
+
+.admin-add-product h2,
+.admin-product-list h2 {
+  color: #4A2545;
+  margin-bottom: 1.5rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.image-preview {
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 200px;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.admin-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.admin-product-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.admin-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-product-image {
+  height: 150px;
+  overflow: hidden;
+}
+
+.admin-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-product-info {
+  padding: 1rem;
+}
+
+.admin-product-info h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #4A2545;
+}
+
+.admin-product-category {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.admin-product-price {
+  font-weight: bold;
+  color: #B76E79;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .admin-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-add-product {
+    order: 1;
+  }
+  
+  .admin-product-list {
+    order: 2;
+  }
+}
+
+/* Admin link in navbar */
+.admin-link {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.admin-link:hover {
+  opacity: 1;
+}

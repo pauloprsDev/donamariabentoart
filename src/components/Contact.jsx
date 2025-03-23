@@ -96,16 +96,23 @@ const Contact = () => {
               </div>
             </div>
             
-            {/* Nova seção com logo e ícone do Instagram */}
             <motion.div 
               className="contact-social-section"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              
               <div className="contact-social-links">
-                
+                <a 
+                  href="https://instagram.com/donamariabentoart" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Siga-nos no Instagram"
+                  className="social-link"
+                >
+                  <FaInstagram size={24} />
+                  <span>Siga-nos no Instagram</span>
+                </a>
               </div>
             </motion.div>
           </motion.div>

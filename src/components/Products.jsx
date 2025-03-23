@@ -1,220 +1,204 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import './Products.css'
-
-const products = [
-  {
-    id: 1,
-    name: 'Cozinhar é só um jeito diferente de amar',
-    description: 'Lindo pano de prato todo trabalhado na pintura em detalhes magenta! Escolha o que mais combina com a sua decoração 🥰',
-    price: 'R$ 120,00',
-    image: 'cozinhareamar.jpg',
-    imageWebp: 'cozinhareamar.webp',
-    category: 'fazenda'
-  },
-  {
-    id: 2,
-    name: 'Coisas Boas Acontecem Aqui',
-    description: 'Pano de prato frase "coisas boas acontecem aqui" feito a mão em pano 100%algodão- 41x66cm',
-    price: 'R$ 135,00',
-    image: 'coisas_boas_acontecem.jpg',
-    imageWebp: 'coisas_boas_acontecem.webp',
-    category: 'cha-cafe'
-  },
-  {
-    id: 3,
-    name: 'Eu me lembro de quando',
-    description: 'Pano de prato com bordado em tons de rosa e verde, com frase nostálgica e detalhes de folhagens. Tecido 100% algodão.',
-    price: 'R$ 125,00',
-    image: 'melembro.jpg',
-    imageWebp: 'melembro.webp',
-    category: 'frases'
-  },
-  {
-    id: 4,
-    name: 'Pano Floral',
-    description: 'Delicado pano de prato com estampa floral em tons de rosa. Feito à mão com muito carinho.',
-    price: 'R$ 110,00',
-    image: 'floral.jpg',
-    imageWebp: 'floral.webp',
-    category: 'flores'
-  }
-];
+import PageTransition from './PageTransition';
+import './Products.css';
 
 const Products = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const categoryParam = queryParams.get('category');
-  
-  const [filter, setFilter] = useState(categoryParam || 'todos');
-  
-  // Update filter when URL parameter changes
+  const [products, setProducts] = useState([]);
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [imageLoading, setImageLoading] = useState({});
+
   useEffect(() => {
-    if (categoryParam) {
-      setFilter(categoryParam);
+    // Load products from localStorage (added by admin)
+    const savedProducts = localStorage.getItem('products');
+    let productsList = [];
+    
+    if (savedProducts) {
+      productsList = JSON.parse(savedProducts);
     }
-  }, [categoryParam]);
-  
-  const getImagePath = (imageName) => {
-    return `${import.meta.env.BASE_URL}${imageName}`;
+    
+    // Add default products if none exist
+    if (productsList.length === 0) {
+      productsList = [
+        {
+          id: '1',
+          name: 'Pano de Prato Floral',
+          description: 'Pano de prato com bordado em tons de verde e a frase "Aprecie as pequenas coisas da vida".',
+          price: '45.00',
+          category: 'panos',
+          imageUrl: `${import.meta.env.BASE_URL}floral.webp` // Updated image path
+        },
+        {
+          id: '2',
+          name: 'Toalha Bordada',
+          description: 'Toalha de mesa com bordado artesanal.',
+          price: '120.00',
+          category: 'toalhas',
+          imageUrl: `${import.meta.env.BASE_URL}coisas_boas_acontecem.webp`
+        },
+        {
+          id: '3',
+          name: 'Conjunto Decorativo',
+          description: 'Conjunto de peças decorativas para cozinha.',
+          price: '89.90',
+          category: 'decoracao',
+          imageUrl: `${import.meta.env.BASE_URL}cozinhareamar.webp`
+        }
+      ];
+    }
+    
+    // Initialize image loading state for each product
+    const initialImageLoading = {};
+    productsList.forEach(product => {
+      initialImageLoading[product.id] = true;
+    });
+    setImageLoading(initialImageLoading);
+    
+    setProducts(productsList);
+    setFilteredProducts(productsList);
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (activeFilter === 'all') {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter(product => product.category === activeFilter));
+    }
+  }, [activeFilter, products]);
+
+  const handleFilterChange = (filter) => {
+    setActiveFilter(filter);
   };
-  
-  // Add image loading state management
-  const [loadingImages, setLoadingImages] = useState({});
-  
-  const handleImageLoad = (id) => {
-    setLoadingImages(prev => ({...prev, [id]: false}));
+
+  const handleImageLoad = (productId) => {
+    setImageLoading(prev => ({
+      ...prev,
+      [productId]: false
+    }));
   };
-  
-  const handleImageError = (e, id) => {
-    setLoadingImages(prev => ({...prev, [id]: false}));
-    e.target.onerror = null;
-    e.target.src = `${import.meta.env.BASE_URL}placeholder.jpg`;
+
+  const handleImageError = (productId, productName) => {
+    console.error(`Failed to load image for product: ${productName}`);
+    setImageLoading(prev => ({
+      ...prev,
+      [productId]: false
+    }));
   };
-  
-  const filteredProducts = filter === 'todos' 
-    ? products 
-    : products.filter(product => product.category === filter);
-  
+
   return (
-    <motion.div 
-      className="products-container"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="products-header">
-        <motion.h1 
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          Nossa Coleção
-        </motion.h1>
-        <motion.p
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          Cada peça é única e pintada à mão com carinho
-        </motion.p>
-      </div>
-      
-      <motion.div 
-        className="products-filter"
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.4 }}
-      >
-        <button 
-          className={`filter-button ${filter === 'todos' ? 'active' : ''}`}
-          onClick={() => setFilter('todos')}
-        >
-          Todos
-        </button>
-        <button 
-          className={`filter-button ${filter === 'frases' ? 'active' : ''}`}
-          onClick={() => setFilter('frases')}
-        >
-          Frases
-        </button>
-        <button 
-          className={`filter-button ${filter === 'fazenda' ? 'active' : ''}`}
-          onClick={() => setFilter('fazenda')}
-        >
-          Fazenda
-        </button>
-        <button 
-          className={`filter-button ${filter === 'cha-cafe' ? 'active' : ''}`}
-          onClick={() => setFilter('cha-cafe')}
-        >
-          Chá e Café
-        </button>
-        <button 
-          className={`filter-button ${filter === 'flores' ? 'active' : ''}`}
-          onClick={() => setFilter('flores')}
-        >
-          Flores
-        </button>
-      </motion.div>
-
-
-      
-      <div className="products-grid" role="list" aria-label="Lista de produtos">
-        {filteredProducts.map((product, index) => (
-          <motion.div 
-            key={product.id} 
-            className="product-card"
-            role="listitem"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + index * 0.1 }}
-            whileHover={{ 
-              y: -5, 
-              boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
-              transition: { duration: 0.3 } 
-            }}
+    <PageTransition>
+      <div className="products-container">
+        <div className="products-header">
+          <motion.h1
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
           >
-            <div className="product-image">
-              {loadingImages[product.id] !== false && (
-                <div className="image-loading-placeholder" aria-hidden="true">
-                  <div className="loading-spinner"></div>
-                </div>
-              )}
-              <picture>
-                <source 
-                  srcSet={getImagePath(product.imageWebp)} 
-                  type="image/webp" 
-                />
-                <img 
-                  src={getImagePath(product.image)} 
-                  alt={`${product.name} - ${product.description}`}
-                  loading="lazy"
-                  style={{ opacity: loadingImages[product.id] === false ? 1 : 0 }}
-                  onLoad={() => handleImageLoad(product.id)}
-                  onError={(e) => handleImageError(e, product.id)}
-                />
-              </picture>
-              <div className="product-overlay">
-                <button 
-                  className="view-details"
-                  aria-label={`Ver detalhes de ${product.name}`}
-                >
-                  Ver Detalhes
-                </button>
-                <button 
-                  className="quick-view"
-                  aria-label={`Visualização rápida de ${product.name}`}
-                >
-                  Visualização Rápida
-                </button>
-              </div>
-            </div>
-            <div className="product-info">
-              <h3 id={`product-${product.id}-title`}>{product.name}</h3>
-              <p id={`product-${product.id}-desc`}>{product.description}</p>
-              <div className="product-footer">
-                <span className="product-price" aria-label={`Preço: ${product.price}`}>{product.price}</span>
-                <button 
-                  className="add-to-cart"
-                  aria-label={`Adicionar ${product.name} ao carrinho`}
-                >
-                  <span>Comprar</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
-  )
-}
+            Nossos Produtos
+          </motion.h1>
+          <motion.p
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Conheça nossa coleção de produtos artesanais
+          </motion.p>
+        </div>
 
-export default Products
+        <motion.div
+          className="products-filter"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <button
+            className={`filter-button ${activeFilter === 'all' ? 'active' : ''}`}
+            onClick={() => handleFilterChange('all')}
+          >
+            Todos
+          </button>
+          <button
+            className={`filter-button ${activeFilter === 'panos' ? 'active' : ''}`}
+            onClick={() => handleFilterChange('panos')}
+          >
+            Panos de Prato
+          </button>
+          <button
+            className={`filter-button ${activeFilter === 'toalhas' ? 'active' : ''}`}
+            onClick={() => handleFilterChange('toalhas')}
+          >
+            Toalhas
+          </button>
+          <button
+            className={`filter-button ${activeFilter === 'decoracao' ? 'active' : ''}`}
+            onClick={() => handleFilterChange('decoracao')}
+          >
+            Decoração
+          </button>
+          <button
+            className={`filter-button ${activeFilter === 'outros' ? 'active' : ''}`}
+            onClick={() => handleFilterChange('outros')}
+          >
+            Outros
+          </button>
+        </motion.div>
+
+        {isLoading ? (
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <p>Carregando produtos...</p>
+          </div>
+        ) : (
+          <motion.div
+            className="products-grid"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <div className="product-card" key={product.id}>
+                  <div className="product-image">
+                    {imageLoading[product.id] && (
+                      <div className="image-loading-placeholder">
+                        <div className="loading-spinner"></div>
+                      </div>
+                    )}
+                    <img
+                      src={product.imageUrl}
+                      alt={product.name}
+                      loading="lazy"
+                      onLoad={() => handleImageLoad(product.id)}
+                      onError={() => handleImageError(product.id, product.name)}
+                    />
+                  </div>
+                  <div className="product-info">
+                    <h3>{product.name}</h3>
+                    <p>{product.description}</p>
+                    <span className="product-price">R$ {product.price}</span>
+                    <button className="add-to-cart">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                      </svg>
+                      Adicionar
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="no-products-message">
+                <p>Nenhum produto encontrado nesta categoria.</p>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </div>
+    </PageTransition>
+  );
+};
+
+export default Products;

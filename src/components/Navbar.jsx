@@ -166,9 +166,24 @@ const Navbar = () => {
                 </motion.div>
                 
                 <motion.div variants={itemVariants}>
-                  <Link to="/" className={`mobile-link ${location.pathname === '/' ? 'active' : ''}`}>
+                  <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>
                     Início
-                  </Link>
+                  </NavLink>
+                  <NavLink to="/about" className={({ isActive }) => isActive ? 'active' : ''}>
+                    Sobre
+                  </NavLink>
+                  <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>
+                    Produtos
+                  </NavLink>
+                  <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>
+                    Contato
+                  </NavLink>
+                  // Add this to your Navbar component - make sure it's visible in the navigation
+                  <div className="nav-links">
+                    <NavLink to="/admin" className="admin-link">
+                      Admin
+                    </NavLink>
+                  </div>
                 </motion.div>
                 
                 <motion.div variants={itemVariants}>
