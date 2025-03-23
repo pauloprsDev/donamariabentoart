@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import './AdminStyles.css';
+import { syncProducts } from '../../utils/productSync';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -99,6 +100,8 @@ const AdminDashboard = () => {
       const updatedProducts = products.filter(product => product.id !== productId);
       setProducts(updatedProducts);
       localStorage.setItem('products', JSON.stringify(updatedProducts));
+    // With:
+    syncProducts(updatedProducts);
     }
   };
 
