@@ -1,6 +1,5 @@
 {
   "name": "donamariabentoart",
-  "homepage": "https://pauloprsdev.github.io/donamariabentoart",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -r https://github.com/pauloprsdev/donamariabentoart.git"
+    "deploy": "gh-pages -d dist -r https://github.com/pauloprsdev/donamariabentoart"
   },
   "dependencies": {
     "@ngrok/ngrok": "^1.4.1",
