@@ -233,3 +233,84 @@
 .admin-link:hover {
   opacity: 1;
 }
+
+/* Adicionar ao final do arquivo existente */
+
+.admin-edit-product {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.admin-edit-product h2 {
+  color: #4A2545;
+  margin-bottom: 1.5rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.admin-edit-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.admin-save-button,
+.admin-cancel-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.admin-save-button {
+  background-color: #4A8C6F;
+  color: white;
+  border: none;
+}
+
+.admin-save-button:hover {
+  background-color: #3A7C5F;
+  transform: translateY(-2px);
+}
+
+.admin-cancel-button {
+  background-color: transparent;
+  color: #B76E79;
+  border: 2px solid #B76E79;
+}
+
+.admin-cancel-button:hover {
+  background-color: #B76E79;
+  color: white;
+}
+
+.admin-edit-button {
+  background-color: #4A8C6F;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.admin-edit-button:hover {
+  background-color: #3A7C5F;
+  transform: translateY(-2px);
+}
+
+.admin-product-actions {
+  display: flex;
+  margin-top: 0.5rem;
+}

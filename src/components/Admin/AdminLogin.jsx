@@ -11,7 +11,7 @@ const AdminLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simple password check - in a real app, use proper authentication
+    // Verificação simples de senha - em um app real, use autenticação adequada
     if (password === 'admin123') {
       localStorage.setItem('adminAuthenticated', 'true');
       navigate('/admin/dashboard');

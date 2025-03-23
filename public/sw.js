@@ -2,53 +2,30 @@ const CACHE_NAME = 'donamariabentoart-cache-v1';
 const urlsToCache = [
   '/donamariabentoart/',
   '/donamariabentoart/index.html',
-  '/donamariabentoart/assets/index.css',
-  '/donamariabentoart/assets/index.js',
 ];
 
-// Install a service worker
+// Instalar service worker
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache');
+        console.log('Cache aberto');
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-// Cache and return requests
+// Estratégia de cache: Network First, fallback para cache
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request).then(
-          response => {
-            // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          }
-        );
+    fetch(event.request)
+      .catch(() => {
+        return caches.match(event.request);
       })
-    );
+  );
 });
 
-// Update a service worker
+// Atualizar service worker
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -62,4 +39,11 @@ self.addEventListener('activate', event => {
       );
     })
   );
+});
+
+// Receber mensagens do cliente
+self.addEventListener('message', event => {
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });
