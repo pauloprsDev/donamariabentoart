@@ -10,8 +10,7 @@ const firebaseConfig = {
     storageBucket: "donamariabento-8ffa3.firebasestorage.app",
     messagingSenderId: "214747042780",
     appId: "1:214747042780:web:7c381b2fe86c1b83473519"
-};
-
+  };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
