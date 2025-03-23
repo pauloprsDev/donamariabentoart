@@ -3,28 +3,48 @@
  * Utilitário para sincronizar alterações de produtos
  */
 import { db } from '../firebase/config';
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, setDoc, onSnapshot } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, onSnapshot } from 'firebase/firestore';
 
 // Função para configurar listener em tempo real
 export const setupProductsListener = (setProducts) => {
-  const productsCollection = collection(db, 'products');
-  
-  // Configura um listener que atualiza os produtos em tempo real
-  const unsubscribe = onSnapshot(productsCollection, (snapshot) => {
-    const productsList = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
+  try {
+    const productsCollection = collection(db, 'products');
     
-    // Atualiza o estado e o localStorage
-    setProducts(productsList);
-    localStorage.setItem('products', JSON.stringify(productsList));
-  }, (error) => {
-    console.error("Erro ao ouvir mudanças nos produtos:", error);
-  });
-  
-  // Retorna função para cancelar o listener quando necessário
-  return unsubscribe;
+    // Configura um listener que atualiza os produtos em tempo real
+    const unsubscribe = onSnapshot(productsCollection, (snapshot) => {
+      const productsList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      // Atualiza o estado e o localStorage
+      setProducts(productsList);
+      localStorage.setItem('products', JSON.stringify(productsList));
+      console.log('Produtos atualizados em tempo real:', productsList.length);
+    }, (error) => {
+      console.error("Erro ao ouvir mudanças nos produtos:", error);
+      
+      // Fallback para localStorage se o Firebase falhar
+      const savedProducts = localStorage.getItem('products');
+      if (savedProducts) {
+        setProducts(JSON.parse(savedProducts));
+      }
+    });
+    
+    // Retorna função para cancelar o listener quando necessário
+    return unsubscribe;
+  } catch (error) {
+    console.error("Erro ao configurar listener:", error);
+    
+    // Fallback para localStorage
+    const savedProducts = localStorage.getItem('products');
+    if (savedProducts) {
+      setProducts(JSON.parse(savedProducts));
+    }
+    
+    // Retorna uma função vazia para evitar erros
+    return () => {};
+  }
 };
 
 // Função para obter produtos do Firestore
@@ -58,7 +78,16 @@ export const addProduct = async (product) => {
     return { ...product, id: docRef.id };
   } catch (error) {
     console.error("Erro ao adicionar produto:", error);
-    return product;
+    
+    // Fallback para localStorage
+    const savedProducts = localStorage.getItem('products') ? 
+      JSON.parse(localStorage.getItem('products')) : [];
+    
+    const newProduct = { ...product, id: Date.now().toString() };
+    const updatedProducts = [...savedProducts, newProduct];
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
+    
+    return newProduct;
   }
 };
 
@@ -70,6 +99,16 @@ export const updateProduct = async (product) => {
     return product;
   } catch (error) {
     console.error("Erro ao atualizar produto:", error);
+    
+    // Fallback para localStorage
+    const savedProducts = localStorage.getItem('products') ? 
+      JSON.parse(localStorage.getItem('products')) : [];
+    
+    const updatedProducts = savedProducts.map(p => 
+      p.id === product.id ? product : p
+    );
+    
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
     return product;
   }
 };
@@ -82,26 +121,20 @@ export const deleteProduct = async (productId) => {
     return true;
   } catch (error) {
     console.error("Erro ao excluir produto:", error);
-    return false;
+    
+    // Fallback para localStorage
+    const savedProducts = localStorage.getItem('products') ? 
+      JSON.parse(localStorage.getItem('products')) : [];
+    
+    const updatedProducts = savedProducts.filter(p => p.id !== productId);
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
+    
+    return true;
   }
 };
 
 // Função para sincronizar produtos (mantida para compatibilidade)
-export const syncProducts = async (products) => {
-  // Salvar produtos no localStorage
+export const syncProducts = (products) => {
   localStorage.setItem('products', JSON.stringify(products));
-  
-  // Verificar se estamos em produção (GitHub Pages)
-  if (window.location.hostname !== 'localhost') {
-    // Forçar atualização do service worker para atualizar o cache
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(registrations => {
-        for (const registration of registrations) {
-          registration.update();
-        }
-      });
-    }
-  }
-  
   return products;
 };
