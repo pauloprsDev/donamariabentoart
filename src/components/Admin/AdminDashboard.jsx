@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { FaTrash, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 import './AdminStyles.css';
 import { syncProducts, getProducts, addProduct, updateProduct, deleteProduct } from '../../utils/productSync';
+import { setupProductsListener } from '../../utils/productSync';
 
 const AdminDashboard = () => {
   // Estado existente
@@ -31,13 +32,15 @@ const AdminDashboard = () => {
       return;
     }
     
-    // Carregar produtos do Firebase
-    const loadProducts = async () => {
-      const productsList = await getProducts();
-      setProducts(productsList);
-    };
+    // Configurar listener em tempo real para produtos
+    const unsubscribe = setupProductsListener(setProducts);
     
-    loadProducts();
+    // Limpar listener quando o componente for desmontado
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, [navigate]);
 
   // Mova a função handleLogout para dentro do componente

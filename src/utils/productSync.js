@@ -1,9 +1,31 @@
+/* eslint-disable no-unused-vars */
 /**
  * Utilitário para sincronizar alterações de produtos
  */
 import { db } from '../firebase/config';
-// eslint-disable-next-line no-unused-vars
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, setDoc, onSnapshot } from 'firebase/firestore';
+
+// Função para configurar listener em tempo real
+export const setupProductsListener = (setProducts) => {
+  const productsCollection = collection(db, 'products');
+  
+  // Configura um listener que atualiza os produtos em tempo real
+  const unsubscribe = onSnapshot(productsCollection, (snapshot) => {
+    const productsList = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    
+    // Atualiza o estado e o localStorage
+    setProducts(productsList);
+    localStorage.setItem('products', JSON.stringify(productsList));
+  }, (error) => {
+    console.error("Erro ao ouvir mudanças nos produtos:", error);
+  });
+  
+  // Retorna função para cancelar o listener quando necessário
+  return unsubscribe;
+};
 
 // Função para obter produtos do Firestore
 export const getProducts = async () => {

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import PageTransition from './PageTransition';
 import './Products.css';
+import { setupProductsListener } from '../utils/productSync';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -12,63 +13,66 @@ const Products = () => {
   const [imageLoading, setImageLoading] = useState({});
 
   useEffect(() => {
-    // Load products from localStorage (added by admin)
-    const savedProducts = localStorage.getItem('products');
-    let productsList = [];
+    // Configurar listener em tempo real para produtos
+    const unsubscribe = setupProductsListener(setProducts);
     
-    if (savedProducts) {
-      productsList = JSON.parse(savedProducts);
-    }
+    // Inicializar com produtos padrão se não houver nenhum
+    setTimeout(() => {
+      if (products.length === 0) {
+        const defaultProducts = [
+          {
+            id: '1',
+            name: 'Pano de Prato Floral',
+            description: 'Pano de prato com bordado em tons de verde e a frase "Aprecie as pequenas coisas da vida".',
+            price: '45.00',
+            category: 'panos',
+            imageUrl: `${import.meta.env.BASE_URL}floral.webp`
+          },
+          {
+            id: '2',
+            name: 'Toalha Bordada',
+            description: 'Toalha de mesa com bordado artesanal.',
+            price: '120.00',
+            category: 'toalhas',
+            imageUrl: `${import.meta.env.BASE_URL}coisas_boas_acontecem.webp`
+          },
+          {
+            id: '3',
+            name: 'Conjunto Decorativo',
+            description: 'Conjunto de peças decorativas para cozinha.',
+            price: '89.90',
+            category: 'decoracao',
+            imageUrl: `${import.meta.env.BASE_URL}cozinhareamar.webp`
+          }
+        ];
+        setProducts(defaultProducts);
+      }
+      setIsLoading(false);
+    }, 1500);
     
-    // Add default products if none exist
-    if (productsList.length === 0) {
-      productsList = [
-        {
-          id: '1',
-          name: 'Pano de Prato Floral',
-          description: 'Pano de prato com bordado em tons de verde e a frase "Aprecie as pequenas coisas da vida".',
-          price: '45.00',
-          category: 'panos',
-          imageUrl: `${import.meta.env.BASE_URL}floral.webp` // Updated image path
-        },
-        {
-          id: '2',
-          name: 'Toalha Bordada',
-          description: 'Toalha de mesa com bordado artesanal.',
-          price: '120.00',
-          category: 'toalhas',
-          imageUrl: `${import.meta.env.BASE_URL}coisas_boas_acontecem.webp`
-        },
-        {
-          id: '3',
-          name: 'Conjunto Decorativo',
-          description: 'Conjunto de peças decorativas para cozinha.',
-          price: '89.90',
-          category: 'decoracao',
-          imageUrl: `${import.meta.env.BASE_URL}cozinhareamar.webp`
-        }
-      ];
-    }
-    
+    // Limpar listener quando o componente for desmontado
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     // Initialize image loading state for each product
     const initialImageLoading = {};
-    productsList.forEach(product => {
+    products.forEach(product => {
       initialImageLoading[product.id] = true;
     });
     setImageLoading(initialImageLoading);
     
-    setProducts(productsList);
-    setFilteredProducts(productsList);
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
+    // Atualizar produtos filtrados quando a lista de produtos mudar
     if (activeFilter === 'all') {
       setFilteredProducts(products);
     } else {
       setFilteredProducts(products.filter(product => product.category === activeFilter));
     }
-  }, [activeFilter, products]);
+  }, [products, activeFilter]);
 
   const handleFilterChange = (filter) => {
     setActiveFilter(filter);
